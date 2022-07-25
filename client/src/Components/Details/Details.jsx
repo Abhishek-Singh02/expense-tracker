@@ -1,10 +1,11 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, Title } from "chart.js";
+import { Card, CardHeader, CardContent, Typography } from "@mui/material";
 import "./Details.scss";
 Chart.register(ArcElement, Legend, Title);
 
-function Details() {
+function Details(props) {
   //chart Data
   const data = {
     labels: ["Red", "Blue", "Yellow"],
@@ -17,15 +18,16 @@ function Details() {
       },
     ],
   };
-
+  const Income = { borderBottom: "10px solid  #4CAF50" };
+  const Expense = { borderBottom: "10px solid #F44336" };
   return (
-    <div className="details__container">
-      <h1>Income</h1>
-      <h3>$1300</h3>
-      <div className="chart">
+    <Card style={props.title === "Income" ? Income : Expense}>
+      <CardHeader title={props.title} />
+      <CardContent>
+        <Typography variant="h5">$50</Typography>
         <Doughnut data={data} />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

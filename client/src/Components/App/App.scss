@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  height: 100vh;
+  gap: 4rem;
+  width: 75%;
+}
+@media screen and (max-width: 650px) {
+  .container {
+    width: 86%;
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .container {
+    width: 65%;
+  }
+}

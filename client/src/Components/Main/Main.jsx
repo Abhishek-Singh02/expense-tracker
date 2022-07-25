@@ -1,16 +1,28 @@
 import React from "react";
+import { Card, CardHeader, CardContent, Typography, Grid } from "@mui/material";
 import UserForm from "../UserForm/UserForm";
+import List from "../List/List";
 import "./Main.scss";
 
 function Main() {
   return (
-    <div className="main__container">
-      <h1>Expense Tracker</h1>
-      <h5>Made by Abhishek Singh</h5>
-      <h1>Total Balance $757</h1>
-      <div className="divider"></div>
-      <UserForm />
-    </div>
+    <Card className="main__container">
+      <CardHeader title="Expense Tracker" subheader="Made by Abhishek Singh" />
+      <CardContent>
+        <Typography align="center" variant="h5">
+          Total Balance : $100
+        </Typography>
+        <div className="divider" />
+        <UserForm />
+      </CardContent>
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <List />
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 }
 

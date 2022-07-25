@@ -1,9 +1,6 @@
-@use "../../variables.scss" as var;
-
 .details__container {
   padding: 2rem;
   background: white;
-  border-bottom: 0.5rem solid var.$income;
 
   h3 {
     margin-top: 1rem;
