@@ -1,19 +1,22 @@
+@use "../../styles/style" as *;
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
-  height: 100vh;
-  gap: 4rem;
-  width: 75%;
+  gap: 3rem;
 }
-@media screen and (max-width: 650px) {
+.mobile {
+  display: none;
+}
+@include media($sm) {
   .container {
-    width: 86%;
     grid-template-columns: 1fr;
+    margin: 2rem 0;
   }
-}
-@media screen and (max-width: 1100px) {
-  .container {
-    width: 65%;
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: contents;
   }
 }

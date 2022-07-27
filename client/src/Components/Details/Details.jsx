@@ -21,7 +21,7 @@ function Details(props) {
   const Income = { borderBottom: "10px solid  #4CAF50" };
   const Expense = { borderBottom: "10px solid #F44336" };
   return (
-    <Card style={props.title === "Income" ? Income : Expense}>
+    <Card style={props.title === "Income" ? Income : Expense} className="details__container">
       <CardHeader title={props.title} />
       <CardContent>
         <Typography variant="h5">$50</Typography>
