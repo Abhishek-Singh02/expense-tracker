@@ -25,7 +25,13 @@ function Details(props) {
       <CardHeader title={props.title} />
       <CardContent>
         <Typography variant="h5">$50</Typography>
-        <Doughnut data={data} />
+        <Doughnut
+          data={data}
+          options={{
+            responsive: true,
+            maintainAspectRatio: true,
+          }}
+        />
       </CardContent>
     </Card>
   );

@@ -1,0 +1,37 @@
+@use "../../styles/_style" as *;
+.nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 3rem;
+  width: 100%;
+  color: white;
+  background: #36a2eb;
+  padding: 0 3rem;
+  z-index: 10;
+  margin-bottom: 3rem;
+
+  .logo {
+    height: 80%;
+  }
+  button {
+    background: none;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 0.2rem 0.4rem;
+    color: white;
+  }
+}
+@include media($sm) {
+  .nav__container {
+    padding: 0 1rem;
+    .logo {
+      height: 70%;
+    }
+    button {
+      transform: scale(0.8);
+    }
+  }
+}
