@@ -1,8 +1,8 @@
 import React from "react";
 import "./Home.scss";
-import Details from "../Details/Details";
-import Main from "../Main/Main";
-import Nav from "../Nav/Nav";
+import Details from "../../Details/Details";
+import Main from "../../Main/Main";
+import Nav from "../../Nav/Nav";
 
 function Home() {
   return (

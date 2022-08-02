@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Typography, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import "./UserForm.scss";
 function UserForm() {
   var date = new Date();

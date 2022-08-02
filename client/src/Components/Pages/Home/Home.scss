@@ -1,15 +1,17 @@
-@use "../../styles/style" as *;
+@use "../../../styles/style" as *;
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
   gap: 3rem;
   width: 100%;
+  overflow: hidden;
 }
 .mobile {
   display: none;
 }
-.desktop {
+.desktop,
+.last {
   width: 100%;
 }
 @include media($sm) {

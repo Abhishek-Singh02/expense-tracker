@@ -13,7 +13,7 @@ function List() {
   const income = { backgroundColor: "#4CAF50", color: "#fff" };
   const expense = { backgroundColor: "#F44336", color: "#fff" };
   return (
-    <MUIList dense={false} style={{ maxHeight: "150px", overflow: "auto" }} className="list__container" id="style-4">
+    <MUIList dense={false} style={{ maxHeight: "225px", overflow: "auto" }} className="list__container" id="style-4">
       {transactions.map((transaction) => {
         return (
           <Slide direction="down" in mountOnEnter unmountOnExit key={transaction.id}>
