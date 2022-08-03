@@ -12,30 +12,47 @@ function UserForm() {
   if (day < 10) day = "0" + day;
 
   var today = year + "-" + month + "-" + day;
+
+  //type selector
+  const [type, setType] = React.useState("Income");
+
   return (
     <div className="form__container">
       <div className="row">
         <FormControl variant="standard">
-          <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
-          <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Age">
-            <MenuItem value="">
-              <em>None</em>
+          <InputLabel>Type</InputLabel>
+          <Select defaultValue={"Income"}>
+            <MenuItem value={"Income"} onClick={() => setType("Income")}>
+              Income
             </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={"Expense"} onClick={() => setType("Expense")}>
+              Expense
+            </MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
-          <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Age">
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+          <InputLabel>Category</InputLabel>
+          {type === "Income" ? (
+            <Select label="Category">
+              <MenuItem value={"Salary"}>Salary</MenuItem>
+              <MenuItem value={"Savings"}>Savings</MenuItem>
+              <MenuItem value={"Deposits"}>Deposits</MenuItem>
+              <MenuItem value={"Investments"}>Investments</MenuItem>
+              <MenuItem value={"Business"}>Business</MenuItem>
+              <MenuItem value={"others"}>others</MenuItem>
+            </Select>
+          ) : (
+            <Select label="Category">
+              <MenuItem value={"Bills"}>Bills</MenuItem>
+              <MenuItem value={"Food"}>Food</MenuItem>
+              <MenuItem value={"Travel"}>Travel</MenuItem>
+              <MenuItem value={"Shopping"}>Shopping</MenuItem>
+              <MenuItem value={"House"}>House</MenuItem>
+              <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
+              <MenuItem value={"Phone"}>Phone</MenuItem>
+              <MenuItem value={"others"}>others</MenuItem>
+            </Select>
+          )}
         </FormControl>
       </div>
       <div className="row">
