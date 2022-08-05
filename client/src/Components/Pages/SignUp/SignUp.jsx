@@ -3,13 +3,16 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import "./SignUp.scss";
+import { default as api } from "../../redux/store/apiSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Copyright(props) {
   return (
@@ -23,17 +26,49 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [error, setError] = React.useState(null);
+  const navigate = useNavigate();
+  const [user] = api.useCreateUserMutation();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    await user({
       email: data.get("email"),
       password: data.get("password"),
-    });
+    })
+      .unwrap()
+      .then((res) => {
+        if (res === "User Created") {
+          setTimeout(() => navigate("/signin"), 3000);
+          toast.success("Signed Up Sucessfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setError(false);
+        }
+        if (res === "Email exists") {
+          toast.error("Email already exists!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setError(true);
+        }
+      });
   };
 
   return (
     <div className="signup__container">
+      <ToastContainer />
       <Container component="main" maxWidth="xs" sx={{ bgcolor: "white", borderRadius: "8px", padding: "1rem" }}>
         <CssBaseline />
         <Box
@@ -43,15 +78,15 @@ export default function SignUp() {
             alignItems: "center",
           }}>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <PersonAddAltIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
+                <TextField required fullWidth id="email" type="email" label="Email Address" error={error === true} name="email" autoComplete="email" />
               </Grid>
               <Grid item xs={12}>
                 <TextField required fullWidth name="password" label="Password" type="password" id="password" autoComplete="new-password" />
@@ -62,7 +97,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/signin">Already have an account? Sign in</Link>
+                <Link to="/">Already have an account? Login</Link>
               </Grid>
             </Grid>
           </Box>

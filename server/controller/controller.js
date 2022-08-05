@@ -6,8 +6,12 @@ async function create_user(req, res) {
     email: req.body.email,
     password: req.body.password,
   });
-  await Create.save().catch((err) => res.json(`Error : ${err}`));
-  return res.status(201).json("User Created");
+  let response = await model.Users.find({ email: req.body.email }).count();
+  console.log(response);
+  if (response === 0) {
+    await Create.save().catch((err) => res.json(`Error : ${err}`));
+    return res.status(201).json("User Created");
+  } else return res.json("Email exists");
 }
 //post: http://localhost:8080/api/signin
 async function get_user(req, res) {
