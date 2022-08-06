@@ -13,7 +13,7 @@ const transaction_model = new Schema({
   type: String,
   category: String,
   amount: Number,
-  date: Date,
+  date: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

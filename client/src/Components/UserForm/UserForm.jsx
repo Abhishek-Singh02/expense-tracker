@@ -2,11 +2,30 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import "./UserForm.scss";
+import { useSelector } from "react-redux";
+import { default as api } from "../redux/store/apiSlice";
 
 function UserForm() {
-  const { register, control, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 2));
+  const [expenseData] = api.useCreateTransactionsMutation();
+  const userId = useSelector((state) => state.login.value);
+  let transactionData = {};
+  const { register, control, handleSubmit, resetField } = useForm();
+  const onSubmit = async (data) => {
+    setType("Income");
+    resetField("Type");
+    resetField("category");
+    resetField("amount");
+    transactionData = {
+      type: data.Type,
+      category: data.Category,
+      amount: data.amount,
+      date: data.date,
+      user: userId,
+    };
+    console.log(transactionData);
+    await expenseData(transactionData)
+      .unwrap()
+      .then((res) => console.log(res));
   };
 
   //Date for form
