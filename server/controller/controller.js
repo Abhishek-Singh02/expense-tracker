@@ -18,8 +18,10 @@ async function get_user(req, res) {
   let email = req.body.email;
   let pass = req.body.password;
   let data = await model.Users.find({ email: email });
-  if (data[0].password === pass) return res.status(201).json(data[0]._id);
-  return res.status(401).json({ message: "Wrong passsword" });
+  if (data.length > 0) {
+    if (data[0].password === pass) return res.status(201).json(data[0]._id);
+  }
+  return res.json({ _id: 0 });
 }
 //post : http://localhost:8080/api/transactions
 async function create_transactions(req, res) {

@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -11,6 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import "./SignIn.scss";
 import { default as api } from "../../redux/store/apiSlice";
+import { useDispatch } from "react-redux";
+import { getLogin } from "../../redux/store/reducer";
+import { toast, ToastContainer } from "react-toastify";
 
 function Copyright(props) {
   return (
@@ -24,22 +27,50 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
-  const [user] = api.useCreateUserMutation();
+  const [error, setError] = React.useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [login] = api.useGetUserMutation();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    await user({
+    await login({
       email: data.get("email"),
       password: data.get("password"),
     })
       .unwrap()
       .then((res) => {
-        if (res === "User Created") <Navigate to="/" replace={true} />;
+        if (res._id !== 0) {
+          dispatch(getLogin(res));
+          setTimeout(() => navigate("/home"), 3200);
+          toast.success("Welcome Back !", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setError(false);
+        } else {
+          toast.error("Invalid Credentials!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setError(true);
+        }
       });
   };
 
   return (
     <div className="signin__container">
+      <ToastContainer />
       <Container component="main" maxWidth="xs" sx={{ bgcolor: "white", borderRadius: "8px", padding: "1rem" }}>
         <CssBaseline />
         <Box
@@ -55,8 +86,8 @@ export default function SignIn() {
             Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} Validate sx={{ mt: 2 }}>
-            <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" />
-            <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="new-password" />
+            <TextField margin="normal" required fullWidth id="email" label="Email Address" error={error === true} name="email" autoComplete="email" />
+            <TextField margin="normal" required fullWidth name="password" label="Password" error={error === true} type="password" id="password" autoComplete="new-password" />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Login
             </Button>
