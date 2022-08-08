@@ -38,7 +38,8 @@ async function create_transactions(req, res) {
 
 //get: http://localhost:8080/api/transactions
 async function get_transactions(req, res) {
-  const data = await model.Transactions.find();
+  const userId = req.query.user;
+  const data = await model.Transactions.find({ user: userId });
   return res.status(202).json(data);
 }
 

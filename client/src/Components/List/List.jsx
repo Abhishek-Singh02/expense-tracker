@@ -2,13 +2,16 @@ import React from "react";
 import { List as MUIList, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemSecondaryAction, IconButton, Slide } from "@mui/material";
 import { Delete, MoneyOff } from "@mui/icons-material";
 
+import { useSelector } from "react-redux";
+
 import { default as api } from "../redux/store/apiSlice";
 import "./List.scss";
 
 function List() {
-  const [remove] = api.useDeleteTransactionsMutation();
+  const params = useSelector((state) => state.login.value);
+  const [remove] = api.useDeleteTransactionsMutation(params);
   let transactions;
-  const { data, isFetching, isError, isSuccess } = api.useGetTransactionsQuery();
+  const { data, isFetching, isError, isSuccess } = api.useGetTransactionsQuery({ user: params });
   console.log(api.useGetTransactionsQuery());
   if (isSuccess) {
     transactions = data;

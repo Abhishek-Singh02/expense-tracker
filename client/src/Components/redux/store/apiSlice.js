@@ -6,7 +6,10 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseURI }),
   endpoints: (builder) => ({
     getTransactions: builder.query({
-      query: () => "/api/transactions",
+      query: (data) => ({
+        url: "/api/transactions",
+        params: data,
+      }),
       providesTags: ["transaction"],
     }),
     createTransactions: builder.mutation({
