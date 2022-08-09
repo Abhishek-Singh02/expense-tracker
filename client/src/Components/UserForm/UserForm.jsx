@@ -15,6 +15,9 @@ function UserForm() {
     resetField("Type");
     resetField("category");
     resetField("amount");
+    if (data.Type === undefined) {
+      data.Type = "Income";
+    }
     transactionData = {
       type: data.Type,
       category: data.Category,
@@ -22,7 +25,7 @@ function UserForm() {
       date: data.date,
       user: userId,
     };
-    console.log(transactionData);
+    console.log(data);
     await expenseData(transactionData)
       .unwrap()
       .then((res) => console.log(res));
@@ -39,7 +42,7 @@ function UserForm() {
   //type selector
   const [type, setType] = React.useState("Income");
   const income = ["Salary", "Savings", "Deposits", "Investments", "Business", "others"];
-  const expense = ["Bills", "Food", "Travel", "Shopping", "House", "Entertainment", "Phone", "others"];
+  const expense = ["Bills", "Food", "Travel", "Shopping", "Entertainment", "others"];
   return (
     <div className="form__container">
       <form id="form">
@@ -49,14 +52,13 @@ function UserForm() {
             <Controller
               name="Type"
               id="Type"
-              defaultValue={"Income"}
               control={control}
               render={({ field }) => (
-                <Select {...field}>
-                  <MenuItem value={"Income"} onClick={() => setType("Income")}>
+                <Select {...field} defaultValue="Income">
+                  <MenuItem value="Income" onClick={() => setType("Income")}>
                     Income
                   </MenuItem>
-                  <MenuItem value={"Expense"} onClick={() => setType("Expense")}>
+                  <MenuItem value="Expense" onClick={() => setType("Expense")}>
                     Expense
                   </MenuItem>
                 </Select>

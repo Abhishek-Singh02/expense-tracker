@@ -1,9 +1,7 @@
 import React from "react";
 import { List as MUIList, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemSecondaryAction, IconButton, Slide } from "@mui/material";
 import { Delete, MoneyOff } from "@mui/icons-material";
-
 import { useSelector } from "react-redux";
-
 import { default as api } from "../redux/store/apiSlice";
 import "./List.scss";
 
@@ -11,17 +9,12 @@ function List() {
   const params = useSelector((state) => state.login.value);
   const [remove] = api.useDeleteTransactionsMutation(params);
   let transactions;
-  const { data, isFetching, isError, isSuccess } = api.useGetTransactionsQuery({ user: params });
-  console.log(api.useGetTransactionsQuery());
+  const { data, isError, isSuccess } = api.useGetTransactionsQuery({ user: params });
   if (isSuccess) {
     transactions = data;
-  } else {
-    transactions = [
-      { _id: 1, type: "Income", category: "Salary", amount: 50, date: "13 wed 2022" },
-      { _id: 2, type: "Expense", category: "Salary", amount: 50, date: "13 wed 2022" },
-      { _id: 3, type: "Income", category: "Salary", amount: 50, date: "13 wed 2022" },
-      { _id: 4, type: "Expense", category: "Salary", amount: 50, date: "13 wed 2022" },
-    ];
+  }
+  if (isError) {
+    transactions = [{ _id: 1, type: "Expense", category: "Reload Page !!!", amount: 0, date: "" }];
   }
   const income = { backgroundColor: "#4CAF50", color: "#fff" };
   const expense = { backgroundColor: "#F44336", color: "#fff" };
@@ -38,7 +31,7 @@ function List() {
                   <MoneyOff />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={transaction.category} secondary={`$${transaction.amount}${"\xa0".repeat(3)}${date}`} />
+              <ListItemText primary={transaction.category} secondary={`₹${transaction.amount}${"\xa0".repeat(3)}${date}`} />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="Delete" onClick={() => remove({ _id: transaction._id }).then((res) => console.log(res))}>
                   <Delete />

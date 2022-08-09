@@ -9,7 +9,7 @@ function Main() {
     <Card className="main__container">
       <CardContent>
         <Typography align="center" variant="h5">
-          Total Balance : $100
+          Total Balance : ₹100
         </Typography>
         <div className="divider" />
         <UserForm />
