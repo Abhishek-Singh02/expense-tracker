@@ -14,7 +14,6 @@ import { default as api } from "../../redux/store/apiSlice";
 import { useDispatch } from "react-redux";
 import { getLogin } from "../../redux/store/reducer";
 import { toast, ToastContainer } from "react-toastify";
-import userData from "../../Data/Data";
 
 function Copyright(props) {
   return (
@@ -68,7 +67,6 @@ export default function SignIn() {
         }
       });
   };
-
   return (
     <div className="signin__container">
       <ToastContainer />

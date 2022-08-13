@@ -3,13 +3,15 @@ import { Card, CardContent, Typography, Grid } from "@mui/material";
 import UserForm from "../UserForm/UserForm";
 import List from "../List/List";
 import "./Main.scss";
+import { useData } from "../Data/Data";
 
 function Main() {
+  const { userData } = useData();
   return (
     <Card className="main__container">
       <CardContent>
         <Typography align="center" variant="h5">
-          Total Balance : ₹100
+          Total Balance : ₹{userData.total}
         </Typography>
         <div className="divider" />
         <UserForm />

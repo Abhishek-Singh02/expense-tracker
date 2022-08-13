@@ -8,7 +8,7 @@ import "./List.scss";
 function List() {
   const params = useSelector((state) => state.login.value);
   const [remove] = api.useDeleteTransactionsMutation(params);
-  let transactions;
+  let transactions = [];
   const { data, isError, isSuccess } = api.useGetTransactionsQuery({ user: params });
   if (isSuccess) {
     transactions = data;
