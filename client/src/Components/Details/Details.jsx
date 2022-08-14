@@ -11,16 +11,16 @@ function Details(props) {
   const { userData } = useData();
   console.log(userData);
 
-  const income = ["Salary", "Savings", "Deposits", "Investments", "Business", "others"];
-  const expense = ["Bills", "Food", "Travel", "Shopping", "Entertainment", "others"];
+  const incomeColor = ["rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 99, 132)", "rgb(123, 200, 164)", "rgb(147, 100, 141)", "rgb( 96,106,116)"];
+  const expenseColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(123, 200, 164)", "rgb(147, 100, 141)", "rgb( 96,106,116)"];
   //chart Data
   const data = {
-    labels: props.title === "Income" ? (userData.inLabel === [] || userData.inLabel === undefined ? ["Add Something"] : userData.inLabel) : userData.exLabel === [] || userData.exLabel === undefined ? ["Add Something"] : userData.exLabel,
+    labels: props.title === "Income" ? userData.inLabel : userData.exLabel,
     datasets: [
       {
         label: "My First Dataset",
-        data: props.title === "Income" ? (userData.income === [] || userData.income === undefined ? [100] : userData.income) : userData.expense === [] ? [100] : userData.expense,
-        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(123, 200, 164)", "rgb(147, 100, 141)", "rgb( 96,106,116)"],
+        data: props.title === "Income" ? userData.income : userData.expense,
+        backgroundColor: props.title === "Income" ? incomeColor : expenseColor,
       },
     ],
   };

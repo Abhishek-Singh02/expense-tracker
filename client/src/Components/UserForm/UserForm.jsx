@@ -1,36 +1,22 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Box } from "@mui/material";
 import "./UserForm.scss";
 import { useSelector } from "react-redux";
 import { default as api } from "../redux/store/apiSlice";
 
 function UserForm() {
+  const [value, setValue] = React.useState("Error");
+  const [value2, setValue2] = React.useState("Error");
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+  const handleChange2 = (e) => {
+    setValue2(e.target.value);
+  };
+  let transactionData;
   const [expenseData] = api.useCreateTransactionsMutation();
   const userId = useSelector((state) => state.login.value);
-  let transactionData = {};
-  const { register, control, handleSubmit, resetField } = useForm();
-  const onSubmit = async (data) => {
-    setType("Income");
-    resetField("Type");
-    resetField("category");
-    resetField("amount");
-    if (data.Type === undefined) {
-      data.Type = "Income";
-    }
-    transactionData = {
-      type: data.Type,
-      category: data.Category,
-      amount: data.amount,
-      date: data.date,
-      user: userId,
-    };
-    console.log(data);
-    await expenseData(transactionData)
-      .unwrap()
-      .then((res) => console.log(res));
-  };
-
   //Date for form
   var date = new Date();
   var day = date.getDate();
@@ -43,68 +29,79 @@ function UserForm() {
   const [type, setType] = React.useState("Income");
   const income = ["Salary", "Savings", "Deposits", "Investments", "Business", "others"];
   const expense = ["Bills", "Food", "Travel", "Shopping", "Entertainment", "others"];
+  //handle submit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(event.target);
+    const data = new FormData(event.currentTarget);
+    transactionData = {
+      type: data.get("Type"),
+      category: data.get("Category"),
+      amount: data.get("amount"),
+      date: data.get("date"),
+      user: userId,
+    };
+    await expenseData(transactionData)
+      .unwrap()
+      .then((res) => console.log(res));
+    event.target.reset();
+    setValue("Error");
+    setValue2("Error");
+  };
+
   return (
-    <div className="form__container">
-      <form id="form">
-        <div className="row">
-          <FormControl variant="standard">
-            <InputLabel>Type</InputLabel>
-            <Controller
-              name="Type"
-              id="Type"
-              control={control}
-              render={({ field }) => (
-                <Select {...field} defaultValue="Income">
-                  <MenuItem value="Income" onClick={() => setType("Income")}>
-                    Income
-                  </MenuItem>
-                  <MenuItem value="Expense" onClick={() => setType("Expense")}>
-                    Expense
-                  </MenuItem>
-                </Select>
-              )}
-            />
-          </FormControl>
-
-          <FormControl variant="standard">
-            <InputLabel>Category</InputLabel>
-            <Controller
-              name="Category"
-              id="Category"
-              control={control}
-              render={({ field }) => (
-                <Select {...field}>
-                  {type === "Income"
-                    ? income.map((text, i) => {
-                        return (
-                          <MenuItem key={i} value={text}>
-                            {text}
-                          </MenuItem>
-                        );
-                      })
-                    : expense.map((text, i) => {
-                        return (
-                          <MenuItem key={i} value={text}>
-                            {text}
-                          </MenuItem>
-                        );
-                      })}
-                </Select>
-              )}
-            />
-          </FormControl>
-        </div>
-        <div className="row">
-          <TextField type="number" variant="standard" label="Amount" fullWidth {...register("amount")} />
-
-          <TextField type="date" variant="standard" defaultValue={today} label="Date" {...register("date")} fullWidth InputLabelProps={{ shrink: true }} />
-        </div>
-        <Button variant="outlined" color="primary" fullWidth onClick={handleSubmit(onSubmit)}>
-          CREATE
+    <>
+      <Box component="form" Validate sx={{ mt: 3 }} onSubmit={handleSubmit}>
+        <Grid container spacing={2} sx={{ mb: 0.5 }}>
+          <Grid item xs={6}>
+            <Select fullWidth variant="standard" value={value} onChange={handleChange} required id="Type" name="Type">
+              <MenuItem value="Error" disabled hidden>
+                Select Type
+              </MenuItem>
+              <MenuItem value="Income" onClick={() => setType("Income")}>
+                Income
+              </MenuItem>
+              <MenuItem value="Expense" onClick={() => setType("Expense")}>
+                Expense
+              </MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={6}>
+            <Select fullWidth variant="standard" value={value2} onChange={handleChange2} required id="Category" name="Category">
+              <MenuItem value="Error" disabled hidden>
+                Select Category
+              </MenuItem>
+              {type === "Income"
+                ? income.map((text, i) => {
+                    return (
+                      <MenuItem key={i} value={text}>
+                        {text}
+                      </MenuItem>
+                    );
+                  })
+                : expense.map((text, i) => {
+                    return (
+                      <MenuItem key={i} value={text}>
+                        {text}
+                      </MenuItem>
+                    );
+                  })}
+            </Select>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField required variant="standard" fullWidth id="amount" type="number" label="Amount" name="amount" />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField required variant="standard" fullWidth name="date" defaultValue={today} label="Date" type="date" id="date" InputLabelProps={{ shrink: true }} />
+          </Grid>
+        </Grid>
+        <Button type="submit" fullWidth variant="outlined" sx={{ mt: 3 }}>
+          Submit
         </Button>
-      </form>
-    </div>
+      </Box>
+    </>
   );
 }
-
 export default UserForm;

@@ -27,6 +27,7 @@ function Copyright(props) {
 
 export default function SignUp() {
   const [error, setError] = React.useState(null);
+  const [error2, setError2] = React.useState("");
   const navigate = useNavigate();
   const [user] = api.useCreateUserMutation();
   const handleSubmit = async (event) => {
@@ -50,9 +51,10 @@ export default function SignUp() {
             progress: undefined,
           });
           setError(false);
+          setError2("");
         }
         if (res === "Email exists") {
-          toast.error("Email already exists!", {
+          toast.error("Email already exists!!!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -62,6 +64,7 @@ export default function SignUp() {
             progress: undefined,
           });
           setError(true);
+          setError2("Email already Exists");
         }
       });
   };
@@ -86,7 +89,7 @@ export default function SignUp() {
           <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField required fullWidth id="email" type="email" label="Email Address" error={error === true} name="email" autoComplete="email" />
+                <TextField required fullWidth id="email" type="email" label="Email Address" helperText={error2} error={error === true} name="email" autoComplete="email" />
               </Grid>
               <Grid item xs={12}>
                 <TextField required fullWidth name="password" label="Password" type="password" id="password" autoComplete="new-password" />

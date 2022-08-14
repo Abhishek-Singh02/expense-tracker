@@ -28,6 +28,7 @@ function Copyright(props) {
 
 export default function SignIn() {
   const [error, setError] = React.useState(null);
+  const [error2, setError2] = React.useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login] = api.useGetUserMutation();
@@ -53,6 +54,7 @@ export default function SignIn() {
             progress: undefined,
           });
           setError(false);
+          setError2("");
         } else {
           toast.error("Invalid Credentials!", {
             position: "top-right",
@@ -64,6 +66,7 @@ export default function SignIn() {
             progress: undefined,
           });
           setError(true);
+          setError2("Invalid Credentials");
         }
       });
   };
@@ -85,8 +88,8 @@ export default function SignIn() {
             Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} Validate sx={{ mt: 2 }}>
-            <TextField margin="normal" required fullWidth id="email" label="Email Address" error={error === true} name="email" autoComplete="email" />
-            <TextField margin="normal" required fullWidth name="password" label="Password" error={error === true} type="password" id="password" autoComplete="new-password" />
+            <TextField margin="normal" required fullWidth id="email" label="Email Address" helperText={error2} error={error === true} name="email" autoComplete="email" />
+            <TextField margin="normal" required fullWidth name="password" label="Password" helperText={error2} error={error === true} type="password" id="password" autoComplete="new-password" />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Login
             </Button>

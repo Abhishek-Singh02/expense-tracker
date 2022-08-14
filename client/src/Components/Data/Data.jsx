@@ -3,7 +3,8 @@ import { default as api } from "../redux/store/apiSlice";
 import _ from "lodash";
 
 export function useData() {
-  let incomeTotal, expenseTotal;
+  let incomeTotal = 0,
+    expenseTotal = 0;
   let incomeArray = [];
   let incomeLabel = [];
   let expenseArray = [];
@@ -11,8 +12,8 @@ export function useData() {
   let expenseData = [];
   let incomeData = [];
   const params = useSelector((state) => state.login.value);
-  const { data } = api.useGetTransactionsQuery({ user: params });
-
+  const { data, isSuccess, isError } = api.useGetTransactionsQuery({ user: params });
+  console.log(data);
   _(data)
     .groupBy("type")
     .map((obj, key) => {
@@ -26,7 +27,7 @@ export function useData() {
             .value(),
           "categories"
         );
-        incomeTotal = _.sumBy(obj, "amount");
+        incomeTotal = _.sumBy(obj, "amount").length === 0 ? 0 : _.sumBy(obj, "amount");
       }
       if (key === "Expense") {
         expenseData = _.sortBy(
@@ -38,7 +39,7 @@ export function useData() {
             .value(),
           "categories"
         );
-        expenseTotal = _.sumBy(obj, "amount");
+        expenseTotal = _.sumBy(obj, "amount").length === 0 ? 0 : _.sumBy(obj, "amount");
       }
     })
     .value();
@@ -54,10 +55,10 @@ export function useData() {
 
   const userData = {
     total: incomeTotal === undefined || expenseTotal === undefined ? 0 : incomeTotal + expenseTotal,
-    income: incomeArray === [] || incomeArray === undefined ? [100] : incomeArray,
-    expense: expenseArray === [] || expenseArray === undefined ? [100] : expenseArray,
-    inLabel: incomeLabel === [] || incomeLabel === undefined ? ["Add Something"] : incomeLabel,
-    exLabel: expenseLabel === [] || expenseLabel === undefined ? ["Add Something"] : expenseLabel,
+    income: incomeArray.length === 0 || incomeArray === undefined ? [100] : incomeArray,
+    expense: expenseArray.length === 0 || expenseArray === undefined ? [100] : expenseArray,
+    inLabel: incomeLabel.length === 0 || incomeLabel === undefined ? ["Add Something"] : incomeLabel,
+    exLabel: expenseLabel.length === 0 || expenseLabel === undefined ? ["Add Something"] : expenseLabel,
     inTotal: incomeTotal === undefined ? 0 : incomeTotal,
     exTotal: expenseTotal === undefined ? 0 : expenseTotal,
   };
