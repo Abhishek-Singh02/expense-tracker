@@ -72,7 +72,7 @@ export default function SignUp() {
                 draggable: true,
                 progress: undefined,
               }),
-            1200
+            1000
           );
 
           setError(true);

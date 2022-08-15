@@ -58,7 +58,7 @@ export default function SignIn() {
                 draggable: true,
                 progress: undefined,
               }),
-            1200
+            1000
           );
           setError(false);
           setError2("");
@@ -82,7 +82,7 @@ export default function SignIn() {
       });
   };
   if (loading) {
-    setTimeout(() => setLoading(false), 1000);
+    setTimeout(() => setLoading(false), 2000);
     return (
       <div className="loader">
         <CircularProgress color="info" />
