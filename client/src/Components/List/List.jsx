@@ -20,7 +20,7 @@ function List() {
   const expense = { backgroundColor: "#F44336", color: "#fff" };
   return (
     <MUIList dense={false} style={{ maxHeight: "225px", overflow: "auto" }} className="list__container" id="style-4">
-      {transactions.map((transaction) => {
+      {[...transactions].reverse().map((transaction) => {
         var fullDate = new Date(transaction.date);
         var date = fullDate.toString().split(" ").slice(0, 4).join(" ");
         return (

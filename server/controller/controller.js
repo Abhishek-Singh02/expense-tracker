@@ -11,7 +11,7 @@ async function create_user(req, res) {
   if (response === 0) {
     await Create.save().catch((err) => res.json(`Error : ${err}`));
     return res.status(201).json("User Created");
-  } else return res.json("Email exists");
+  } else return res.status(201).json("Email exists");
 }
 //post: http://localhost:8080/api/signin
 async function get_user(req, res) {

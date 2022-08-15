@@ -1,9 +1,19 @@
 .signin__container {
   display: grid;
   place-items: center;
-  height: 95vh;
+  height: 88vh;
   margin: 0 1rem;
 }
 .MuiFormHelperText-root {
   color: red !important;
+}
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .MuiCircularProgress-svg {
+    color: white;
+    transform: scale(2);
+  }
 }

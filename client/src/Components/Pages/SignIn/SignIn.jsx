@@ -14,6 +14,7 @@ import { default as api } from "../../redux/store/apiSlice";
 import { useDispatch } from "react-redux";
 import { getLogin } from "../../redux/store/reducer";
 import { toast, ToastContainer } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Copyright(props) {
   return (
@@ -29,10 +30,12 @@ function Copyright(props) {
 export default function SignIn() {
   const [error, setError] = React.useState(null);
   const [error2, setError2] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login] = api.useGetUserMutation();
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     await login({
@@ -44,32 +47,48 @@ export default function SignIn() {
         if (res._id !== 0) {
           dispatch(getLogin(res));
           setTimeout(() => navigate("/home"), 3200);
-          toast.success("Welcome Back !", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
+          setTimeout(
+            () =>
+              toast.success("Welcome Back !", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+              }),
+            1200
+          );
           setError(false);
           setError2("");
         } else {
-          toast.error("Invalid Credentials!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
+          setTimeout(
+            () =>
+              toast.error("Invalid Credentials!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+              }),
+            1200
+          );
           setError(true);
           setError2("Invalid Credentials");
         }
       });
   };
+  if (loading) {
+    setTimeout(() => setLoading(false), 1000);
+    return (
+      <div className="loader">
+        <CircularProgress color="info" />
+      </div>
+    );
+  }
   return (
     <div className="signin__container">
       <ToastContainer />

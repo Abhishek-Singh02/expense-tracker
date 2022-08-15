@@ -13,6 +13,7 @@ import "./SignUp.scss";
 import { default as api } from "../../redux/store/apiSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Copyright(props) {
   return (
@@ -28,9 +29,11 @@ function Copyright(props) {
 export default function SignUp() {
   const [error, setError] = React.useState(null);
   const [error2, setError2] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const [user] = api.useCreateUserMutation();
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     await user({
@@ -40,35 +43,54 @@ export default function SignUp() {
       .unwrap()
       .then((res) => {
         if (res === "User Created") {
-          setTimeout(() => navigate("/signin"), 3000);
-          toast.success("Signed Up Sucessfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
+          setTimeout(() => navigate("/"), 3000);
+          setTimeout(
+            () =>
+              toast.success("Signed Up successfully !", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+              }),
+            1200
+          );
           setError(false);
           setError2("");
         }
         if (res === "Email exists") {
-          toast.error("Email already exists!!!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
+          setTimeout(
+            () =>
+              toast.error("Email already exists!!!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+              }),
+            1200
+          );
+
           setError(true);
           setError2("Email already Exists");
         }
       });
   };
-
+  if (loading) {
+    setTimeout(() => setLoading(false), 2000);
+    return (
+      <>
+        <ToastContainer />
+        <div className="loader">
+          <CircularProgress color="info" />
+        </div>
+      </>
+    );
+  }
   return (
     <div className="signup__container">
       <ToastContainer />

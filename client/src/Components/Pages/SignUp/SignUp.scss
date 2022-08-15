@@ -4,3 +4,13 @@
   height: 85vh;
   margin: 0 1rem;
 }
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .MuiCircularProgress-svg {
+    color: white;
+    transform: scale(2);
+  }
+}

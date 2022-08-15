@@ -1,6 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Box } from "@mui/material";
+import { TextField, Button, Select, MenuItem, Grid, Box } from "@mui/material";
 import "./UserForm.scss";
 import { useSelector } from "react-redux";
 import { default as api } from "../redux/store/apiSlice";
