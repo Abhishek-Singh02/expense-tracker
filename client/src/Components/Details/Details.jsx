@@ -9,7 +9,6 @@ Chart.register(ArcElement, Legend, Title);
 
 function Details(props) {
   const { userData } = useData();
-  console.log(userData);
 
   const incomeColor = ["rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 99, 132)", "rgb(123, 200, 164)", "rgb(147, 100, 141)", "rgb( 96,106,116)"];
   const expenseColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(123, 200, 164)", "rgb(147, 100, 141)", "rgb( 96,106,116)"];

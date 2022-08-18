@@ -7,10 +7,11 @@ import { useData } from "../Data/Data";
 
 function Main() {
   const { userData } = useData();
+  const minus = { color: "red" };
   return (
     <Card className="main__container">
       <CardContent>
-        <Typography align="center" variant="h5">
+        <Typography align="center" variant="h5" sx={userData.total < 0 ? minus : ""}>
           Total Balance : ₹{userData.total}
         </Typography>
         <div className="divider" />

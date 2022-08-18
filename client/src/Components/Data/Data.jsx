@@ -13,7 +13,6 @@ export function useData() {
   let incomeData = [];
   const params = useSelector((state) => state.login.value);
   const { data, isSuccess, isError } = api.useGetTransactionsQuery({ user: params });
-  console.log(data);
   _(data)
     .groupBy("type")
     .map((obj, key) => {
@@ -54,7 +53,7 @@ export function useData() {
   });
 
   const userData = {
-    total: incomeTotal === undefined || expenseTotal === undefined ? 0 : incomeTotal + expenseTotal,
+    total: incomeTotal - expenseTotal,
     income: incomeArray.length === 0 || incomeArray === undefined ? [100] : incomeArray,
     expense: expenseArray.length === 0 || expenseArray === undefined ? [100] : expenseArray,
     inLabel: incomeLabel.length === 0 || incomeLabel === undefined ? ["Add Something"] : incomeLabel,
@@ -62,6 +61,5 @@ export function useData() {
     inTotal: incomeTotal === undefined ? 0 : incomeTotal,
     exTotal: expenseTotal === undefined ? 0 : expenseTotal,
   };
-  console.log(userData);
   return { userData };
 }

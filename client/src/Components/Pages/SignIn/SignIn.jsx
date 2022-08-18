@@ -44,9 +44,10 @@ export default function SignIn() {
     })
       .unwrap()
       .then((res) => {
+        setTimeout(() => setLoading(false), 1000);
         if (res._id !== 0) {
           dispatch(getLogin(res));
-          setTimeout(() => navigate("/home"), 3200);
+          setTimeout(() => navigate("/home"), 2500);
           setTimeout(
             () =>
               toast.success("Welcome Back !", {
@@ -58,7 +59,7 @@ export default function SignIn() {
                 draggable: true,
                 progress: undefined,
               }),
-            1000
+            1200
           );
           setError(false);
           setError2("");
@@ -82,7 +83,6 @@ export default function SignIn() {
       });
   };
   if (loading) {
-    setTimeout(() => setLoading(false), 2000);
     return (
       <div className="loader">
         <CircularProgress color="info" />
@@ -107,7 +107,7 @@ export default function SignIn() {
             Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} Validate sx={{ mt: 2 }}>
-            <TextField margin="normal" required fullWidth id="email" label="Email Address" helperText={error2} error={error === true} name="email" autoComplete="email" />
+            <TextField margin="normal" required fullWidth type="email" id="email" label="Email Address" helperText={error2} error={error === true} name="email" autoComplete="email" />
             <TextField margin="normal" required fullWidth name="password" label="Password" helperText={error2} error={error === true} type="password" id="password" autoComplete="new-password" />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Login

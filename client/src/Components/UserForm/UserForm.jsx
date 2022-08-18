@@ -31,8 +31,8 @@ function UserForm() {
   //handle submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target);
     const data = new FormData(event.currentTarget);
+    console.log(data.get("Type"));
     transactionData = {
       type: data.get("Type"),
       category: data.get("Category"),
@@ -53,7 +53,7 @@ function UserForm() {
       <Box component="form" Validate sx={{ mt: 3 }} onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ mb: 0.5 }}>
           <Grid item xs={6}>
-            <Select fullWidth variant="standard" value={value} onChange={handleChange} required id="Type" name="Type">
+            <Select fullWidth variant="standard" value={value} onChange={handleChange} id="Type" name="Type">
               <MenuItem value="Error" disabled hidden>
                 Select Type
               </MenuItem>

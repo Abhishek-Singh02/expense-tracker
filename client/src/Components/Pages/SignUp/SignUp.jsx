@@ -42,8 +42,9 @@ export default function SignUp() {
     })
       .unwrap()
       .then((res) => {
+        setTimeout(() => setLoading(false), 1000);
         if (res === "User Created") {
-          setTimeout(() => navigate("/"), 3000);
+          setTimeout(() => navigate("/"), 2500);
           setTimeout(
             () =>
               toast.success("Signed Up successfully !", {
@@ -72,7 +73,7 @@ export default function SignUp() {
                 draggable: true,
                 progress: undefined,
               }),
-            1000
+            1200
           );
 
           setError(true);
@@ -81,7 +82,6 @@ export default function SignUp() {
       });
   };
   if (loading) {
-    setTimeout(() => setLoading(false), 2000);
     return (
       <>
         <ToastContainer />
