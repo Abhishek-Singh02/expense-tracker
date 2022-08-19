@@ -12,7 +12,7 @@ export function useData() {
   let expenseData = [];
   let incomeData = [];
   const params = useSelector((state) => state.login.value);
-  const { data, isSuccess, isError } = api.useGetTransactionsQuery({ user: params });
+  const { data } = api.useGetTransactionsQuery({ user: params });
   _(data)
     .groupBy("type")
     .map((obj, key) => {

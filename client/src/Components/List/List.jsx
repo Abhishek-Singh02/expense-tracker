@@ -33,7 +33,7 @@ function List() {
               </ListItemAvatar>
               <ListItemText primary={transaction.category} secondary={`₹${transaction.amount}${"\xa0".repeat(3)}${date}`} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="Delete" onClick={() => remove({ _id: transaction._id }).then((res) => console.log(res))}>
+                <IconButton edge="end" aria-label="Delete" onClick={() => remove({ _id: transaction._id })}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
