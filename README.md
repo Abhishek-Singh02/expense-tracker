@@ -15,5 +15,5 @@ I completed it with the following: React, JavaScript, HTML, CSS, SASS, Redux Too
 ![image](https://user-images.githubusercontent.com/102522318/185903096-3f2f2dbb-d142-4801-aea6-5d1cf593cb8d.png)
 
 # Live Demo
-Click on the link below for Live preview.
+Click on the link for Live preview.
 https://try-expense-tracker.vercel.app
