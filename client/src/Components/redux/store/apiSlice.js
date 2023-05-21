@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const baseURI = "https://expense-tracker-server-999.herokuapp.com";
 
 export const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: baseURI }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.API_URI || baseURI }),
   endpoints: (builder) => ({
     getTransactions: builder.query({
       query: (data) => ({
