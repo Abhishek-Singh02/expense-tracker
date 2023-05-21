@@ -42,39 +42,15 @@ export default function SignUp() {
     })
       .unwrap()
       .then((res) => {
-        setTimeout(() => setLoading(false), 1000);
+        setLoading(false)
         if (res === "User Created") {
-          setTimeout(() => navigate("/"), 2500);
-          setTimeout(
-            () =>
-              toast.success("Signed Up successfully !", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-              }),
-            1200
-          );
+          toast.success("Signed Up successfully !")
+          navigate("/")
           setError(false);
           setError2("");
         }
         if (res === "Email exists") {
-          setTimeout(
-            () =>
-              toast.error("Email already exists!!!", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-              }),
-            1200
-          );
+          toast.error("Email already exists!!!")
 
           setError(true);
           setError2("Email already Exists");
@@ -84,7 +60,6 @@ export default function SignUp() {
   if (loading) {
     return (
       <>
-        <ToastContainer />
         <div className="loader">
           <CircularProgress color="info" />
         </div>

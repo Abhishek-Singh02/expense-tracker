@@ -44,39 +44,15 @@ export default function SignIn() {
     })
       .unwrap()
       .then((res) => {
-        setTimeout(() => setLoading(false), 1000);
+        setLoading(false)
         if (res._id !== 0) {
           dispatch(getLogin(res));
-          setTimeout(() => navigate("/home"), 2500);
-          setTimeout(
-            () =>
-              toast.success("Welcome Back !", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-              }),
-            1200
-          );
+          toast.success("Welcome Back !")
+          navigate("/home")
           setError(false);
           setError2("");
         } else {
-          setTimeout(
-            () =>
-              toast.error("Invalid Credentials!", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-              }),
-            1200
-          );
+          toast.error("Invalid Credentials!")
           setError(true);
           setError2("Invalid Credentials");
         }
@@ -91,7 +67,6 @@ export default function SignIn() {
   }
   return (
     <div className="signin__container">
-      <ToastContainer />
       <Container component="main" maxWidth="xs" sx={{ bgcolor: "white", borderRadius: "8px", padding: "1rem" }}>
         <CssBaseline />
         <Box
